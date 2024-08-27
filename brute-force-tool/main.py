@@ -1,10 +1,30 @@
 # This file will aim to test my knowledge on brute forcing techniques
+# This uses recursion and took my way too long to figure out
 
-target = "p"
-all_keys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+import string
+import time
 
-pass_guess = []
+target = "cat"
+letters = list(string.ascii_lowercase)
+max_len = 6
 
-for key in all_keys:
-    if key == target:
-        print(f"target is {key}")
+
+def brute_force(cur_guess, target, letters, max_len):
+    if cur_guess == target:
+        print(f"Nailed it my guy, Password is {cur_guess}")
+        return True
+    
+    if len(cur_guess) == max_len:
+        return False
+    
+    for letter in letters:
+        if brute_force(cur_guess + letter, target, letters, max_len):
+            return True
+        
+start_time = time.time()
+
+brute_force('', target, letters, max_len)
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"{elapsed_time:.4f} seconds")
